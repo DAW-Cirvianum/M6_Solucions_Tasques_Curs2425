@@ -19,3 +19,30 @@ Hora d'inici:
 - Els corredors joves corren a les 12:30 p. m. (independentment del registre).
 
 Si tenen exactament 18 anys hauran de dirigir-se al punt d'informació.
+
+La idea és que utilitzis una funció que rebi els següents paràmetres:
+
+- `edat` (enter) - Edat del corredor.
+- `data` (string) - Data de registre. Format: "YYYY-MM-DD".
+- `anticipada` (booleà) - Indica si la inscripció és anticipada o no.
+
+La funció ha de retornar una tupla amb el número de cursa i l'hora d'inici.
+
+Exemple:
+
+```javascript
+console.log(registreCursa(20, "2024-06-01", true)); // [1000, "09:30"]
+console.log(registreCursa(20, "2024-06-01", false)); // [999, "11:00"]
+console.log(registreCursa(17, "2024-06-01", true)); // [998, "12:30"]
+console.log(registreCursa(18, "2024-06-01", true)); // [997, "Punt d'informació"]
+```
+
+Pots suposar que la data de registre sempre serà anterior a la data de la cursa.
+
+```javascript
+function registreCursa(edat, data, anticipada) {
+    // Escriu aquí el teu codi
+}
+```
+
+---
