@@ -3,8 +3,6 @@ export function sum(n) {
   for (let i = 1; i <= n; i++) {
     total += i;
   }
-  console.log(total);
+  //console.log(total);
   return total;
 }
-
-sum(5);
