@@ -1,0 +1,14 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#operacio {
+  font-size: 24px;
+}
+
+#missatge {
+  margin-top: 20px;
+  font-weight: bold;
+}
