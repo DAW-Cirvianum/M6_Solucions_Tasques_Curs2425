@@ -54,3 +54,4 @@ Has de trobar el nombre mínim de caràcters sobrants que no poden ser utilitzat
   - Un nombre enter que indica el mínim nombre de caràcters de `s` que no poden ser utilitzats en cap subcadena vàlida.
 
 ---
+

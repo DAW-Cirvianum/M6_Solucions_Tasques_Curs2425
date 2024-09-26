@@ -1,4 +1,4 @@
-# Exercici 10 - Idioma de les balenes - Iteracions/Bucles
+# Kata 4 - Idioma de les balenes - Iteracions/Bucles
 
 Preneu una frase com 'turpentina i tortugues' i traduïu-la a la seva equivalent en "parla de balena": 'UUEEIAIOUUEE'.
 

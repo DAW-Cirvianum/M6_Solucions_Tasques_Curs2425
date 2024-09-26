@@ -6,3 +6,5 @@ export function fibonacci(n) {
   // Cas general: retornem la suma dels dos números anteriors
   return fibonacci(n - 1) + fibonacci(n - 2);
 }
+
+fibonacci(10); // 55
