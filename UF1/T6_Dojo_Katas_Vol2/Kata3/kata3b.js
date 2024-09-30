@@ -14,7 +14,6 @@ export function calcularDiesEntrenament() {
 
   // Inicialitzar la variable 'dies'
   let dies;
-
   // Determinar els dies d'entrenament segons l'esdeveniment
   if (esdeveniment === 'marató') {
     dies = 50;
