@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulari amb sessionStorage</title>
+  </head>
+  <body>
+    <h1>Formulari amb Dades Temporals</h1>
+    <form>
+      Nom:
+      <input
+        type="text"
+        id="nom"
+        title="Nom"
+        placeholder="Escriu el teu nom"
+        oninput="guardarDada('nom')"
+      /><br />
+      Cognoms:
+      <input
+        type="text"
+        id="cognoms"
+        title="Cognoms"
+        placeholder="Escriu els teus cognoms"
+        oninput="guardarDada('cognoms')"
+      /><br />
+      Email:
+      <input
+        type="email"
+        id="email"
+        title="Email"
+        placeholder="Escriu el teu email"
+        oninput="guardarDada('email')"
+      /><br />
+    </form>
+
+    <script src="ex3.js"></script>
+    <!-- Enllaç al fitxer JS extern -->
+  </body>
+</html>
