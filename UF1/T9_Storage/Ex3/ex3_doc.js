@@ -1,3 +1,4 @@
+/** @module Exercici3 */
 /**
  * Guarda el valor d'un camp del formulari a sessionStorage.
  * @param {string} camp - El nom del camp que es vol guardar.

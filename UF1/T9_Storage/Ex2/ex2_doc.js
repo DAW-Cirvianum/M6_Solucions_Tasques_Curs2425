@@ -1,3 +1,4 @@
+/** @module Exercici2 */
 /**
  * Obté el color de fons guardat a `localStorage`.
  * @returns {string|null} El color de fons guardat o null si no existeix.

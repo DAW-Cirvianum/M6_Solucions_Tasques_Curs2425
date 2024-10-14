@@ -1,3 +1,5 @@
+/** @module Exercici 1 */
+
 /**
  * Obté el comptador de visites de localStorage.
  * Si no existeix, inicialitza el comptador a 1 i el guarda a localStorage.
