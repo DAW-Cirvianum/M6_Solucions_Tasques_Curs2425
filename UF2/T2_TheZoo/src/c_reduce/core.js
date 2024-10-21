@@ -14,15 +14,12 @@ function sum(array) {
 // (1*2*3=6)*[4,5] = NaN
 // function productAll(array) {}
 
-//En este caso he seguido otra aproximación. He decidido concatenar primero todos los arrays de la matriz
-//y así poder aplicar el reduce como si de un solo array se tratara.
-// 1. Con el método propio Concat y ayudándonos de reduce hacemos que se vayan cogiendo cada uno de los elementos del
-// array y los vayamos concatenando en uno nuevo virgen.
-// 2. Ahora ya podemos hacer el producto de todos los elementos del array
+// Per tal que poder multiplicar els valors dels arrays dins d'un array, hem de pensar a fer servir un altre reduce (o nested reduce)
 function productAll(array) {
   return array.reduce(
     (result, numbers) =>
-      result * numbers.reduce((mul, current) => mul * current, 1)
+      result * numbers.reduce((mul, current) => mul * current, 1),
+    1
   );
 }
 
@@ -34,10 +31,10 @@ function productAll(array) {
 
 //Ho podem fer aplicant destructuring d'un Array!!!
 //Compte amb l'ús de la notació de punts per afegir el parell key-value!
-// With dot and bracket notation, you can:
-///// access the value of a property by its key
-///// modify the value of an existing property by its key and
-///// add a new property to an object
+// Amb la notació de punts i corxetes, pots:
+///// accedir al valor d'una propietat pel seu clau
+///// modificar el valor d'una propietat existent pel seu clau i
+///// afegir una nova propietat a un objecte
 
 //Si el valor amb el que accediu (o afegiu) una variable no el coneixeu, opteu per
 //la notació amb "corxetes"

@@ -25,6 +25,16 @@ function entryCalculator(entrants) {
   // 2- [type, quantity]: desestructuració de l'array. Tipus (per exemple "Adult") i quantitat (per exemple 2).
   // 3- Retornem el total acumulat més el preu de l'entrada, per exemple prices['Adult'] * 2
 
+  // const entries = Object.entries(entrants);
+
+  // const total = entries.reduce((total, entry) => {
+  //   const [type, quantity] = entry;
+  //   console.log(total, type, quantity);
+  //   return total + prices[type] * quantity;
+  // }, 0);
+
+  // return total;
+
   return Object.entries(entrants).reduce((total, [type, quantity]) => {
     console.log(total, type, quantity);
     return total + prices[type] * quantity;
@@ -32,14 +42,39 @@ function entryCalculator(entrants) {
 }
 
 function schedule(dayName) {
-  // Primer podríem obtenir els horaris filtrats en funció de si ens passen un dia concret o no.ç
-  // Exemple: { Tuesday: { open: 8, close: 18 } }
-  // Object.entries -> [[Tuesday, { open: 8, close: 18 }]]
-  const hoursFiltered = !dayName ? hours : { [dayName]: hours[dayName] };
-  return Object.entries(hoursFiltered).reduce((acc, [day, hours]) => {
-    acc[day] = hoursToString(hours);
-    return acc;
-  }, {});
+  // Format de l'objecte "hours":
+  // hours = {
+  //   Tuesday: { open: 8, close: 18 },
+  //   Wednesday: { open: 8, close: 18 },
+  //   Thursday: { open: 10, close: 20 },
+  //   Friday: { open: 10, close: 20 },
+  //   Saturday: { open: 8, close: 22 },
+  //   Sunday: { open: 8, close: 20 },
+  //   Monday: { open: 0, close: 0 },
+  // };
+
+  // En primer lloc podem decidir si volem filtrar per un dia concret o no. Amb ternaris això ho fem en una sola línia.
+
+  if (dayName) {
+    // Ens guardem la informació del dia de l'objecte "hours" en una variable.
+    const dayHours = hours[dayName];
+    // Si ens passen com a paràmetre el dia, doncs retornem únicament l'horari d'aquest dia. Compte! En format llegible!!!
+    return { [dayName]: hoursToString(dayHours) };
+  } else {
+    // Altrament hem de retornar TOTS els horaris en format llegible.
+    return Object.entries(hours).reduce((acc, [day, hours]) => {
+      // Un cop dins necessito retornar un objecte amb el nom del dia i les hores en format llegible.
+      acc[day] = hoursToString(hours);
+      return acc;
+    }, {});
+  }
+
+  // Manera un pel més complexa per tal de no haver de repetir el codi:
+  // const hoursFiltered = dayName ? { [dayName]: hours[dayName] } : hours;
+  // return Object.entries(hoursFiltered).reduce((acc, [day, hours]) => {
+  //   acc[day] = hoursToString(hours);
+  //   return acc;
+  // }, {});
 }
 // Ens fem una funció que em permeti retornar l'hora en format 12h
 function convertHour(hour) {
@@ -60,9 +95,14 @@ function hoursToString({ open, close }) {
 function animalCount(species) {
   // Necessitem treballar amb la llista "animals" i els paràmetres:
   // ex: name: 'lions', residents: [{},{}...],
-  // AQUÍ TREBALLEM AMB UN ARRAY D'OBJECTES --> Object no neceesari + destructuring d'objectes!
+  // AQUÍ TREBALLEM AMB UN ARRAY D'OBJECTES --> Necessitem la informació de
+  // l'objecte animals però no la de residents (únicament el nombre d'elements a
+  // l'interior).
   const animalsCount = animals.reduce((accum, { name, residents }) => {
     // Per cada animal, calculem el nombre de residents
+    // Com afegim un nou element a l'objecte? La primera vegada tenim que "acccum" és un objecte buit.
+    // Per tant, si retornem l'objecte amb la propietat [name] i li assignem el valor de residents.length
+    // estem afegint un nou element a l'objecte.
     accum[name] = residents.length;
     // I l'afegim al resultat
     return accum;
