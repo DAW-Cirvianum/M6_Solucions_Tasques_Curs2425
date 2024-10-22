@@ -61,7 +61,7 @@ function schedule(dayName) {
 
 function animalCount(species) {}
 
-function animalMap({ includeNames } = { includeNames: null }) {
+function animalMap({ includeNames, sex } = { includeNames: null, sex: null }) {
   // Ens podem l'estructura de l'objecte inicial:
   // const initialValue = {
   //   NE: [],
@@ -76,26 +76,79 @@ function animalMap({ includeNames } = { includeNames: null }) {
       acc[location] = [];
     }
 
+    const residentsFilter = sex
+      ? residents.filter((resident) => resident.sex === sex)
+      : residents;
+
     const withNames = includeNames
-      ? { [name]: residents.map((resident) => resident.name) }
+      ? { [name]: residentsFilter.map((resident) => resident.name) }
       : name;
 
-    acc[location] = [...acc[location], withNames];
+    acc[location].push(withNames);
+    //acc[location] = [...acc[location], withNames];
     //o també: acc[location].push(animalNames)
     return acc;
   }, {});
 }
 
-let options = { includeNames: true };
-let actual = animalMap();
+let options = { includeNames: true, sex: 'male' };
+let actual = animalMap(options);
 
-function animalPopularity(rating) {}
+function animalPopularity(rating) {
+  const animalsByPopularity = animals.reduce((acc, { popularity, name }) => {
+    if (!acc[popularity]) {
+      acc[popularity] = [];
+    }
+    //Afegir el nom de l'animal a la posició corresponent.
+    acc[popularity] = [...acc[popularity], name];
+    return acc;
+  }, {});
 
-function animalsByIds(ids) {}
+  return rating ? animalsByPopularity[rating] : animalsByPopularity;
+}
 
-function animalByName(animalName) {}
+function animalsByIds(ids) {
+  if (typeof ids === 'undefined') {
+    return [];
+  } else if (typeof ids === 'string') {
+    return [animals.find((animal) => animal.id === ids)];
+  } else if (Array.isArray(ids)) {
+    return animals.filter((animal) => ids.includes(animal.id));
+  } else {
+    return [];
+  }
+}
 
-function employeesByIds(ids) {}
+function animalByName(animalName) {
+  if (!animalName) return {};
+  // 1. Recupero només l'objecte on trobaré el meu animal
+  const especie = animals.find(({ residents }) =>
+    residents.some((resident) => resident.name === animalName)
+  );
+  // 2. Recupero les dades del resident en concret
+  if (!especie) return {};
+
+  const resident = especie.residents.find(
+    (resident) => resident.name === animalName
+  );
+  // 3. Utilitzant les dades generals i les concretes, acabo construint el meu objecte final.
+  return {
+    name: resident.name,
+    sex: resident.sex,
+    age: resident.age,
+    species: especie.name,
+  };
+}
+
+function employeesByIds(ids) {
+  if (typeof ids === 'undefined') {
+    return [];
+  } else if (typeof ids === 'string') {
+    return [employees.find((employee) => employee.id === ids)];
+  } else if (Array.isArray(ids)) {
+    return employees.filter((employee) => ids.includes(employee.id));
+  }
+}
 
 function employeeByName(employeeName) {}
 

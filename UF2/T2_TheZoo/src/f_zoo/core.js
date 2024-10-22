@@ -198,7 +198,6 @@ function animalsByIds(ids) {
 function animalByName(animalName) {
   if (!animalName) return {};
   // En aquest cas busquem la primera coincidència de l'animal d'acord al nom
-  // Podem recuperar únicament el nom de l'animal i els residents
   // Farem un find sobre l'array "animals" i un some sobre l'array "residents"
   // Aquest find retornarà l'objecte animal que compleixi la condició, però tot!
   const animal = animals.find(({ residents }) =>
@@ -232,14 +231,13 @@ function employeesByIds(ids) {
   //Hem puc crear un objecte amb tres mètodes que s'executaran en funció del tipus
   //de paràmetre que em passin:
 
-  const funcByType = {
-    undefined: () => [],
-    string: (id) => employees.find((_employee) => _employee.id === id),
-    object: (ids) =>
-      employees.filter((_employee) => ids.includes(_employee.id)),
-  };
-
-  return funcByType[typeof ids](ids);
+  if (typeof ids === 'undefined') {
+    return [];
+  } else if (typeof ids === 'string') {
+    return employees.find((employee) => employee.id === ids);
+  } else if (typeof ids === 'object') {
+    return employees.filter((employee) => ids.includes(employee.id));
+  }
 }
 
 function employeeByName(employeeName) {
