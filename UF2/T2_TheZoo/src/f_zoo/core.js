@@ -113,9 +113,7 @@ function animalCount(species) {
   return !species ? animalsCount : animalsCount[species];
 }
 
-function animalMap(
-  { includeNames, sex } = { includeNames: null, sexEntry: null }
-) {
+function animalMap({ includeNames, sex } = { includeNames: null, sex: null }) {
   // Ens podem crear l'estructura de l'objecte inicial:
   const initialValue = {
     NE: [],
@@ -148,23 +146,37 @@ function animalMap(
 }
 
 function animalPopularity(rating) {
+  // Com que volem tornar a obtenir un sol objecte, optem per un reduce inicial
   const animalsByPopularity = animals.reduce(
+    // _animals serà el meu acumulador
+    // Per destructuring em quedo únicament amb la informació que necessito, 'popularity' i 'name'
     (_animals, { popularity, name }) => {
+      // Si no existeix l'element, el creem
       if (!_animals[popularity]) {
         _animals[popularity] = [];
       }
+      // Afegim el nom de l'animal a la posició corresponent
       _animals[popularity] = [..._animals[popularity], name];
+      // O amb un push: _animals[popularity].push(name);
+      // O amb un concat: _animals[popularity].concat(name);
       return _animals;
     },
     {}
   );
-
+  // Si ens passen un rating, retornem l'objecte amb la informació d'aquest rating
   return rating ? animalsByPopularity[rating] : animalsByPopularity;
 }
 
 function animalsByIds(ids) {
-  //Aques switch el podem expressar de manea més sintètica
-  /*   switch (typeof ids) {
+  if (typeof ids === 'undefined') {
+    return [];
+  } else if (typeof ids === 'string') {
+    return [animals.find((_animals) => _animals.id === ids)];
+  } else if (Array.isArray(ids)) {
+    return animals.filter((_animals) => ids.includes(_animals.id));
+  } else {
+    return [];
+  } /*   switch (typeof ids) {
     case 'undefined':
       return [];
     case 'string':
@@ -172,7 +184,7 @@ function animalsByIds(ids) {
     case 'object':
       animals.filter((_animals) => ids.includes(_animals.id));
   } */
-  const funcsByTypes = {
+  /*   const funcsByTypes = {
     undefined: () => [],
     string: (id) => [animals.find((_animals) => _animals.id === id)],
     object: (ids) => animals.filter((_animals) => ids.includes(_animals.id)),
@@ -180,21 +192,33 @@ function animalsByIds(ids) {
 
   return funcsByTypes.hasOwnProperty(typeof ids)
     ? funcsByTypes[typeof ids](ids)
-    : [];
+    : []; */
 }
 
 function animalByName(animalName) {
-  const findAnimalByName = ({ name }) => name == animalName;
-  const getAnimal = () => {
-    const { name, residents } = animals.find(({ residents }) =>
-      residents.find(findAnimalByName)
-    );
-    const animal = residents.find(findAnimalByName);
-    animal.species = name;
-    return animal;
-  };
+  if (!animalName) return {};
+  // En aquest cas busquem la primera coincidència de l'animal d'acord al nom
+  // Podem recuperar únicament el nom de l'animal i els residents
+  // Farem un find sobre l'array "animals" i un some sobre l'array "residents"
+  // Aquest find retornarà l'objecte animal que compleixi la condició, però tot!
+  const animal = animals.find(({ residents }) =>
+    residents.some((resident) => resident.name === animalName)
+  );
 
-  return animalName ? getAnimal() : {};
+  if (!animal) return {};
+
+  // Ara hem de buscar l'animal en concret dins de l'array de residents
+  const resident = animal.residents.find(
+    (resident) => resident.name === animalName
+  );
+
+  // I amb el resident específic ara ja si tenim tota la informació que necessitem
+  return {
+    name: resident.name,
+    sex: resident.sex,
+    age: resident.age,
+    species: animal.name,
+  };
 }
 
 function employeesByIds(ids) {
