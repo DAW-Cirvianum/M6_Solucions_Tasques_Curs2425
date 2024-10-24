@@ -282,7 +282,43 @@ function managersForEmployee(idOrName) {
 }
 
 function employeeCoverage(idOrName) {
-  // your code here
+  let employeName;
+  if (!idOrName) {
+    employeName = employees.reduce(
+      (acc, { firstName, lastName, responsibleFor }) => {
+        if (!acc[firstName + ' ' + lastName]) {
+          acc[firstName + ' ' + lastName] = returnNames(responsibleFor);
+        }
+        acc[firstName + ' ' + lastName] = returnNames(responsibleFor);
+        console.log(acc);
+        return acc;
+      },
+      {}
+    );
+  } else {
+    let getUser = employees.find(
+      ({ firstName, lastName, id }) =>
+        firstName === idOrName || lastName === idOrName || id === idOrName
+    );
+
+    const animals = returnNames(getUser.responsibleFor);
+    let newObject = {};
+    newObject[getUser.firstName + ' ' + getUser.lastName] = animals;
+    return newObject;
+  }
+
+  return employeName;
+
+  function returnNames(responsibleFor) {
+    const noms = responsibleFor.reduce((acc, value) => {
+      let animal = animals.find(({ id }) => value.includes(id));
+      console.log('animal:', animal);
+      acc = [...acc, animal.name];
+      console.log('acc:', acc);
+      return acc;
+    }, []);
+    return noms;
+  }
 }
 
 export default {
